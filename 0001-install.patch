@@ -1,0 +1,71 @@
+From d6957400c707b02424e973fe210f5033f910bdf8 Mon Sep 17 00:00:00 2001
+From: wjyrich <1071633242@qq.com>
+Date: Tue, 20 Aug 2024 16:04:06 +0800
+Subject: [PATCH] install
+
+---
+ DDCToolbox.pro              | 4 ----
+ snap/gui/ddctoolbox.desktop | 4 ++--
+ src/src-lib.pro             | 2 +-
+ src/src.pro                 | 8 ++++++++
+ 4 files changed, 11 insertions(+), 7 deletions(-)
+
+diff --git a/DDCToolbox.pro b/DDCToolbox.pro
+index c93b926..51499ae 100644
+--- a/DDCToolbox.pro
++++ b/DDCToolbox.pro
+@@ -5,7 +5,3 @@ TARGET = DDCToolbox
+     SUBDIRS += src
+ }
+ 
+-!no_tests {
+-    SUBDIRS += tests
+-}
+-
+diff --git a/snap/gui/ddctoolbox.desktop b/snap/gui/ddctoolbox.desktop
+index 00c8a50..6c4e971 100644
+--- a/snap/gui/ddctoolbox.desktop
++++ b/snap/gui/ddctoolbox.desktop
+@@ -4,8 +4,8 @@ GenericName=Editor
+ Comment=Create and edit VDC files on Linux
+ Keywords=editor
+ Categories=AudioVideo;Audio;
+-Exec=ddctoolbox
+-Icon=${SNAP}/meta/gui/ddctoolbox.svg
++Exec=DDCToolbox
++Icon=ddctoolbox
+ StartupNotify=false
+ Terminal=false
+ Type=Application 
+diff --git a/src/src-lib.pro b/src/src-lib.pro
+index 68d1d0c..49c9d78 100755
+--- a/src/src-lib.pro
++++ b/src/src-lib.pro
+@@ -8,7 +8,7 @@ CONFIG += c++17
+ include($$PWD/DDCToolbox-lib.pri)
+ 
+ unix {
+-    target.path = /usr/lib
++    target.path = $$PREFIX/lib
+ }
+ else: error("Static linking only available on Linux systems")
+ 
+diff --git a/src/src.pro b/src/src.pro
+index 8a8c261..dd7b3d1 100755
+--- a/src/src.pro
++++ b/src/src.pro
+@@ -61,3 +61,11 @@ DISTFILES += \
+     $$PWD/../deployment/Info.plist
+ 
+ FORMS +=
++
++target.path = $$PREFIX/bin
++desktop.files = ../snap/gui/ddctoolbox.desktop
++desktop.path = $$PREFIX/share/applications/
++icons.path = $$PREFIX/share/icons/hicolor/scalable/apps
++icons.files = ../snap/gui/ddctoolbox.svg
++
++INSTALLS += target desktop icons
+-- 
+2.43.4
+

@@ -1,0 +1,28 @@
+version: "1"
+
+package:
+  id: io.github.DDCToolbox
+  name: DDCToolbox
+  version: 2.0.1.1
+  kind: app
+  description: |
+    Create and edit DDC headset correction files
+
+command:
+  - /opt/apps/io.github.DDCToolbox/files/bin/DDCToolbox
+
+base: org.deepin.foundation/23.0.0
+runtime: org.deepin.Runtime/23.0.1
+
+sources:
+  - kind: git
+    url: https://github.com/timschneeb/DDCToolbox.git
+    version: master
+    commit: 1988c7b00c57f890975e8f50460646bda6e21dd9
+
+build: |
+  cd /project/linglong/sources/DDCToolbox.git
+  git apply ../../../0001-install.patch
+  qmake -makefile PREFIX=${PREFIX} LIB_INSTALL_DIR=${PREFIX}/lib/${TRIPLET}
+  make -j$(nproc)
+  make install
